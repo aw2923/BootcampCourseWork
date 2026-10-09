@@ -6,21 +6,27 @@
 # Arguments: 1-> tab delimited file
 # Date: 8 Oct 2025
 
-if [ -z "$1" ]; then
+if [[ ! -e "$1" ]]; then
     echo 'Invalid input: %s\n' "$1" >&2
+    exit 2
+fi
+
+if [[ ! -r "$1" ]]; then
+    echo 'Unreadable input: %s\n' "$1" >&2
     exit 1
 fi
 
-
 echo "Creating a comma delimited version of $1 ..."
 
-mkdir -p ../results
+cat "$1" | tr "\t" "," > "$1.csv"
 
-cat "$1" | tr "\t" "," > "../results/$1.csv"
+echo "Output: "
+cat "$1.csv"
 
-echo "Saved to: ../results/$1.csv"
+mkdir ../results
+mv "$1.csv" ../results
 
-cat "../results/$1.csv"
+echo "Saved to: ../results"
 
 
 exit 0
