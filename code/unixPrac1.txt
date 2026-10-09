@@ -11,13 +11,12 @@ wc -l ../data/fasta/407228326.fasta ../data/fasta/407228412.fasta ../data/fasta/
 
 #2 Display the E. coli sequence lines
 tail -n +2 ../data/fasta/e_coli.fasta
-#explanation: Header is the identification, not part of the sequence. 
-#explanation: The tail command limits the output of a file, and -n+2 indicates the first line of the file to be excluded. 
+#explanation: Header is the identification, not part of the sequence. The tail command limits the output of a file from the bottom, and -n+2 indicates the first line of the file to be excluded. 
 
 
 #3 Count sequence length
-tail -n +2 ../data/fasta/e_coli.fasta | tr -d "\n" >> ../data/fasta/e_coli_new.fasta| wc -m  
-#explanation: tail removes header, tr -d removes line-ending \n, wc -m counts the number of characters left
+tail -n +2 ../data/fasta/e_coli.fasta | tr -d "\n" | wc -m
+#explanation: tail removes header, tr -d deletes the line ending \n, wc -m counts the number of characters left
 #output: 4686137
 
 
@@ -28,12 +27,6 @@ tail -n +2 ../data/fasta/e_coli.fasta | tr -d '\n' | grep -o "ATGC" | grep -c "A
 
 
 #5 Calculate the AT/GC ratio
-tail -n +2 ../data/fasta/e_coli.fasta >> ../data/fasta/e_coli_new.fasta;
-n_A=$(grep -o A ../data/fasta/e_coli_new.fasta | wc -l); 
-n_T=$(grep -o T ../data/fasta/e_coli_new.fasta | wc -l);
-n_G=$(grep -o G ../data/fasta/e_coli_new.fasta | wc -l);
-n_C=$(grep -o C ../data/fasta/e_coli_new.fasta | wc -l);
-echo $(echo "($n_A + $n_T) / ($n_G + $n_C)") | bc -l
-
-#explanation: I created a new fasta file without the header, produced variables counting the ATGC bases separately in the new file, and used the variables for calculation through bc
+tail -n +2 ../data/fasta/e_coli.fasta >> ../data/fasta/e_coli_new.fasta; n_A=$(grep -o A ../data/fasta/e_coli_new.fasta | wc -l); n_T=$(grep -o T ../data/fasta/e_coli_new.fasta | wc -l); n_G=$(grep -o G ../data/fasta/e_coli_new.fasta | wc -l); n_C=$(grep -o C ../data/fasta/e_coli_new.fasta | wc -l); echo $(echo "($n_A + $n_T) / ($n_G + $n_C)") | bc -l
+#explanation: I created a new fasta file without the header, counted the ATGC bases from the new file separately with grep -o wc -l, storing the values in variables, and used the variables for calculation through bc
 #output: .96922822848944879586
