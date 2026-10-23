@@ -237,3 +237,61 @@ test_invalid_records(row_invalid)
 - what is the most suitable format for storing VALID_TAXONPAIRS
 - how to include source_row in the process_records iterations and exclude header row
 - how is row.get("record_id", "") differ from row["record_id"]
+
+
+
+
+## Assignment 3
+
+
+### code/TreeHeight.R
+
+usage: calculate tree heights with distance from tree and angle, save the results in a csv file
+
+input: data/trees.csv
+
+running from terminal at project root: Rscript code/TreeHeight.R
+
+output: results/TreeHts.csv
+
+
+function:
+
+TreeHeightCalculation <- function(Distance.m, Angle.degrees) {
+    height_m <- Distance.m * tan(Angle.degrees * pi /180)
+    return(height_m)
+}
+height_m <- TreeHeightCalculation(treedata$Distance.m, treedata$Angle.degrees)
+
+checking calculation: TreeHeightCalculation(8,45) --> 8
+
+
+
+### code/get_TreeHeight.R
+
+usage: from any input data set, calculate tree heights with distance from tree and angle, save the results in a csv file
+
+input: csv file input by user (must be exactly 1 existing csv file with the correct headers ("Species", "Distance.m", "Angle.degrees"))
+
+running from terminal at project root: Rscript code/get_TreeHeight.R <input.csv>
+
+output: results/<input_basename>_treeheights.csv
+
+
+
+### code/pound_hill_analysis.R
+
+usage: from the pound hill data, find the species richness in each quadrat, calculate the mean richness in each plot, create a figure to compare mean richness across the three cultivation treatments
+
+input: data/pound_hill_data.csv
+
+metadata: data/pound_hill_meta_data.csv
+
+running from terminal at project root: Rscript code/pound_hill_analysis.R
+
+output: 
+table = results/pound_hill_plot_richness.csv
+figure = results/pound_hill_plot_richness.pdf
+
+
+
