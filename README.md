@@ -7,18 +7,33 @@ Aiyanuj Wongkomet (aiyanuj@gmail.com / ai.wongkomet23@imperial.ac.uk)
 
 ## Assignment 1
 
-Code: **unixPrac1.txt** inspect and summarise FASTA genome sequences
+### Code/**unixPrac1.txt** inspect and summarise FASTA genome sequences
+- functions
 1. Count file lines
 2. Display sequence lines
 3. Count sequence length
-4. Count a literal motif
+4. Count a literal motif (ATGC)
 5. Calculate AT/GC ratio
+- input: data/fasta407228326.fasta data/fasta/407228412.fasta data/fasta/e_coli.fasta
+- output: terminal lines
+- from project root directory terminal, run: bash code/unixPrac1.txt 
+- changes after feedback: remove the use of intermediate fasta file for counting bases and count from the input file directly, untrack the intermediate file
 
-Code: **tabtocsv.sh** change tab delimited file to comma delimited, 
-input: data/tab-example.tsv
+### Code/**tabtocsv.sh** change tab delimited file to comma delimited
+- convert tsv to csv file, produce useful errors for missing, unreadable, or invalid input, or when output is saved unsuccessfully
+- input: data/tab-example.tsv
+- output: results/tab-example.tsv.csv
+- from project root directory terminal, run: bash code/tabtocsv.sh data/tab-example.tsv
+- changes after feedback: add error messages for when input is not exactly one or output is not in the results directory, correct the results directory path, use printf instead of echo
 
-Code: **csvtospace.sh** change comma delimited file to space delimited, 
-input: data/temperatures
+### Code/**csvtospace.sh** change comma delimited file to space delimited
+- convert csv to space delimited txt file, produce useful errors for missing, unreadable, or invalid input, or when output is saved unsuccessfully
+- input: data/temperatures/1800.csv 
+- output: results/1800.csv.txt
+- from project root directory terminal, run: bash code/csvtospace.sh data/temperatures/1800.csv
+- (can replace 1800.csv with 1801.csv, 1802.csv, 1803.csv)
+- changes after feedback: add error messages for when input is not exactly one or output is not in the results directory, correct the results directory path
+
 
 
 ## Assignment 2

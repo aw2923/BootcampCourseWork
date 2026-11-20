@@ -1,32 +1,35 @@
 
 #1 Count file lines
-wc -l ../data/fasta/407228326.fasta ../data/fasta/407228412.fasta ../data/fasta/e_coli.fasta
+wc -l data/fasta/407228326.fasta data/fasta/407228412.fasta data/fasta/e_coli.fasta
 #explanation: wc -l count the number of lines in the files
 #output: 
-     27 ../data/fasta/407228326.fasta
-    127 ../data/fasta/407228412.fasta
-  78104 ../data/fasta/e_coli.fasta
+     27 data/fasta/407228326.fasta
+    127 data/fasta/407228412.fasta
+  78104 data/fasta/e_coli.fasta
   78258 total
 
 
 #2 Display the E. coli sequence lines
-tail -n +2 ../data/fasta/e_coli.fasta
-#explanation: Header is the identification, not part of the sequence. The tail command limits the output of a file from the bottom, and -n+2 indicates the first line of the file to be excluded. 
+tail -n +2 data/fasta/e_coli.fasta
+#explanation: Header is the identification, not part of the sequence. To remove the header, the tail command limits the output of a file from the bottom, and -n+2 indicates the first line of the file to be excluded. 
 
 
 #3 Count sequence length
-tail -n +2 ../data/fasta/e_coli.fasta | tr -d "\n" | wc -m
-#explanation: tail removes header, tr -d deletes the line ending \n, wc -m counts the number of characters left
+tail -n +2 data/fasta/e_coli.fasta | tr -d "\n" | wc -m
+#explanation: tail -n +2 removes header, tr -d deletes the line ending \n, wc -m counts the number of characters left
 #output: 4686137
 
 
 #4 Count a literal motif
-tail -n +2 ../data/fasta/e_coli.fasta | tr -d '\n' | grep -o "ATGC" | grep -c "ATGC"
-#explanation: grep -o extract the matching sequences into separate lines, grep -c gives count of those lines
+tail -n +2 data/fasta/e_coli.fasta | tr -d '\n' | grep -o "ATGC" | wc -l
+#explanation: use steps from #3, then grep -o extract the matching sequences into separate lines, wc -l count the number of those lines
 #output: 21968
 
 
 #5 Calculate the AT/GC ratio
-tail -n +2 ../data/fasta/e_coli.fasta >> ../data/fasta/e_coli_new.fasta; n_A=$(grep -o A ../data/fasta/e_coli_new.fasta | wc -l); n_T=$(grep -o T ../data/fasta/e_coli_new.fasta | wc -l); n_G=$(grep -o G ../data/fasta/e_coli_new.fasta | wc -l); n_C=$(grep -o C ../data/fasta/e_coli_new.fasta | wc -l); echo $(echo "($n_A + $n_T) / ($n_G + $n_C)") | bc -l
-#explanation: I created a new fasta file without the header, counted the ATGC bases from the new file separately with grep -o wc -l, storing the values in variables, and used the variables for calculation through bc
+n_A=$(tail -n +2 data/fasta/e_coli.fasta | grep -o A | wc -l); n_T=$(tail -n +2 data/fasta/e_coli.fasta | grep -o T | wc -l); n_G=$(tail -n +2 data/fasta/e_coli.fasta | grep -o G | wc -l); n_C=$(tail -n +2 data/fasta/e_coli.fasta | grep -o C | wc -l); echo $(printf "($n_A + $n_T) / ($n_G + $n_C)") | bc -l
+#explanation: count each of the ATGC bases one by one with grep -o wc -l after using tail -n +2 to remove header, store the count values in variables 'n_X', and use the variables for AT/GC ratio calculation through bc -l
 #output: .96922822848944879586
+
+
+
