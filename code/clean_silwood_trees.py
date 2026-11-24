@@ -1,5 +1,8 @@
 #!/usr/bin/env python3
-"""Validate and clean the synthetic Silwood tree survey."""
+# Author: Aiyanuj <aw2923@ic.ac.uk>
+# Script: clean_silwood_trees.py
+
+"""Validate and clean the synthetic Silwood tree survey"""
 
 
 from __future__ import annotations
