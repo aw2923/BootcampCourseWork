@@ -1,4 +1,10 @@
 
+# Author: Aiyanuj <aw2923@ic.ac.uk>
+# Script: TreeHeight.R
+# Calculate tree heights using angle degrees and distance from trees, save output to csv file
+
+
+# input: tree data csv
 treedata <- read.csv("data/trees.csv", header = TRUE)
 
 
@@ -29,29 +35,34 @@ for (i in treedata$Angle.degrees) {
 }
 
 
-
-print("Inspect Input:")
-str(treedata)
-
-
 # function to calculate tree heights
-TreeHeightCalculation <- function(Distance.m, Angle.degrees) {
-    height_m <- Distance.m * tan(Angle.degrees * pi /180)
+TreeHeight <- function(Angle.degrees, Distance.m) {
+    radians <- Angle.degrees * pi / 180
+    height_m <- Distance.m * tan(radians)
     return(height_m)
 }
 
-height_m <- TreeHeightCalculation(treedata$Distance.m, treedata$Angle.degrees)
+
+# check the calculation of TreeHeight function with an example
+test_angle <- 45
+test_distance <- 8
+expected_height <- 8
+test_height <- TreeHeight(test_angle, test_distance)
+# raise an error if the calculation is not as expected
+if (is.numeric(test_height) != is.numeric(expected_height)) {
+    stop("TreeHeight function does not return expected calculation")
+}
 
 
-
-treedata.height <- treedata
-treedata.height$height_m <- height_m
-
+# apply function and append heights to the data frame
+treedata$height_m <- TreeHeight(treedata$Angle.degrees, treedata$Distance.m)
 
 print("Inspect Output:")
-str(treedata.height)
+str(treedata)
 
 
+# save the output to a csv file
 dir.create("results", showWarnings = FALSE)
-write.csv(treedata.height, "results/TreeHts.csv", row.names = FALSE)
+write.csv(treedata, "results/TreeHts.csv", row.names = FALSE)
+
 print("Output saved at results/TreeHts.csv")
