@@ -66,138 +66,138 @@ python3 code/clean_silwood_trees.py
 python3 code/test_silwood_trees.py
 ```
 
-#### pseudocode and function explanations:
+#### Pseudocode and function explanations:
 
 1. **validate_records**   
 for each record, run through each column, clean entry, return rejection reason in `errors` if the entry is missing/invalid/duplicate (using canonical rejection reasons from the metadata), otherwise add the entry to `cleaned`, if there is one or more errors then `cleaned` is converted to 'None'
 
-    cleaned: 
-    errors: 
+    cleaned:  
+    errors:  
 
-    record_id:
-            remove surrounding whitespace
-            if record_id == ""
-                reject 'missing record_id'
-            else if record_id != "ST" and exactly three digits
-                reject 'invalid record_id'
-            else if record_id in accepted_id
-                reject 'duplicate record_id'
-            else
-                append accepted_id
-                append cleaned
-    Valid_locations = ["Silwood Bottom", "Nash's Field", "Manor House", "Reactor Wood"]
-    location:
-            remove surrounding whitespace
-            if location == ""
-                reject 'missing location'
-            else if location != == Valid_locations, ignoring letter case
-                'invalid location'
-            else
-                append cleaned
-    Valid_genus = [ "Quercus", "Acer", "Betula", "Fagus", "Fraxinus" ]
-    genus:
-            remove surrounding whitespace
-            if genus == ""
-                reject 'missing genus'
-            else if genus != == Valid_genus, ignoring letter case
-                reject 'invalid genus'
-            else
-                append cleaned
-    Valid_species = ["robur", "petraea", "pseudoplatanus", "pendula", "sylvatica", "excelsior"]
-    species: 
-            remove surrounding whitespace
-            if species == ""
-                reject 'missing species'
-            else if species != == Valid_species, ignoring letter case
-                reject 'invalid species'
-            else
-                append cleaned
-    Valid_taxonpairs = []
-    if genus and species valid:
-        if (cleaned[genus], cleaned[species]) not in Valid_taxonpairs:
-            reject 'invalid genus/species combination'
-    distance_m:
-            if distance_m == ""
-                reject 'missing distance_m'
-            else if distance_m <0 or >100
-                reject 'distance_m out of range'
-            else 
-                append cleaned
-    angle_degrees
-            if angle_degrees == ""
-                reject 'missing angle_degrees'
-            else if angle_degrees <0 or >90
-                reject 'angle_degrees out of range'
-            else
-                append cleaned
+    record_id:  
+            remove surrounding whitespace  
+            if record_id == ""  
+                reject 'missing record_id'  
+            else if record_id != "ST" and exactly three digits  
+                reject 'invalid record_id'  
+            else if record_id in accepted_id  
+                reject 'duplicate record_id'  
+            else  
+                append accepted_id  
+                append cleaned  
+    Valid_locations = ["Silwood Bottom", "Nash's Field", "Manor House", "Reactor Wood"]  
+    location:  
+            remove surrounding whitespace  
+            if location == ""  
+                reject 'missing location'  
+            else if location != == Valid_locations, ignoring letter case  
+                'invalid location'  
+            else  
+                append cleaned  
+    Valid_genus = [ "Quercus", "Acer", "Betula", "Fagus", "Fraxinus" ]  
+    genus:  
+            remove surrounding whitespace  
+            if genus == ""  
+                reject 'missing genus'  
+            else if genus != == Valid_genus, ignoring letter case  
+                reject 'invalid genus'  
+            else  
+                append cleaned  
+    Valid_species = ["robur", "petraea", "pseudoplatanus", "pendula", "sylvatica", "excelsior"]  
+    species:  
+            remove surrounding whitespace  
+            if species == ""  
+                reject 'missing species'  
+            else if species != == Valid_species, ignoring letter case  
+                reject 'invalid species'  
+            else  
+                append cleaned  
+    Valid_taxonpairs = []  
+    if genus and species valid:  
+        if (cleaned[genus], cleaned[species]) not in Valid_taxonpairs:  
+            reject 'invalid genus/species combination'  
+    distance_m:  
+            if distance_m == ""  
+                reject 'missing distance_m'  
+            else if distance_m <0 or >100  
+                reject 'distance_m out of range'  
+            else   
+                append cleaned  
+    angle_degrees  
+            if angle_degrees == ""  
+                reject 'missing angle_degrees'  
+            else if angle_degrees <0 or >90  
+                reject 'angle_degrees out of range'  
+            else  
+                append cleaned  
 
-    if errors:
-        cleaned = None
+    if errors:  
+        cleaned = None  
 
-    return cleaned, errors
+    return cleaned, errors  
 
 
 2. **process_records**  
-sort accepted and rejected records into two lists, append records in `cleaned` to `accepted`, and append `errors` to `issues` 
+sort accepted and rejected records into two lists, append records in `cleaned` to `accepted`, and append `errors` to `issues`  
 
-    accepted = []
-    issues = []
+    accepted = []  
+    issues = []  
 
-    for row in records:
-        cleaned, errors = validate_records()
+        for row in records:  
+        cleaned, errors = validate_records()  
 
-        if cleaned is not None:
-            accepted.append = cleaned
-        else:
-            issues.append = errors
-    
-    return accepted, issues
+        if cleaned is not None:  
+            accepted.append = cleaned  
+        else:  
+            issues.append = errors  
+
+    return accepted, issues  
 
 
 3. **summarise_oaks**   
-count the number of oaks in the accepted records by species
+count the number of oaks in the accepted records by species  
 
-    robur_count = 0
-    petraea_count = 0
+    robur_count = 0  
+    petraea_count = 0  
 
-    if clean["genus"] == "Quercus":
-        if clean_records["species"] == "robur":
-            robur += 1
-        else if clean["species"] == "petraea":
-            petraea += 1
+    if clean["genus"] == "Quercus":  
+        if clean_records["species"] == "robur":  
+            robur += 1  
+        else if clean["species"] == "petraea":  
+            petraea += 1  
 
-    oak_counts = ({'species':'robur', 'count': robur_count }, {'species':'petraea', 'count': petraea_count })
-    return oak_counts
-
-
-#### testing:
-
-**checkpoint print tests**:
-
-    records = load_records()
-
-    print("Loaded Silwood trees data:")
-    for row in records:
-        print(row)
-
-    clean_records, issues = process_records(records)
-
-    print("Accepted records: ")
-    for record in clean_records:
-        print(record)
-
-    print("Issue report: ")
-    for record in issues:
-        print(record)
-
-    oak_counts = summarise_oaks(clean_records)
-
-    print(oak_counts)
+    oak_counts = ({'species':'robur', 'count': robur_count }, {'species':'petraea', 'count': petraea_count })  
+    return oak_counts  
 
 
-**importing modules test**:
+#### Testing:
 
-from clean_silwood_trees import load_records, validate_records, process_records
+**checkpoint print tests**:  
+
+    records = load_records()  
+
+    print("Loaded Silwood trees data:")  
+    for row in records:  
+        print(row)  
+
+    clean_records, issues = process_records(records)  
+
+    print("Accepted records: ")  
+    for record in clean_records:  
+        print(record)  
+
+    print("Issue report: ")  
+    for record in issues:  
+        print(record)  
+
+    oak_counts = summarise_oaks(clean_records)  
+
+    print(oak_counts)  
+
+
+**importing modules test**:  
+
+from clean_silwood_trees import load_records, validate_records, process_records  
     -> does not run 
 
 
@@ -206,13 +206,13 @@ from clean_silwood_trees import load_records, validate_records, process_records
 ```
 python3 code/test_silwood_trees.py
 ```
-assert tests on each function by creating example cases of valid, invalid and boundary records
+assert tests on each function by creating example cases of valid, invalid and boundary records  
 - check if validate_records() correctly cleans and recognises the validity of each case
 - check if process_records() sorts accepted and rejected records accordingly
 - check if summarise_oaks() counts the number of oak trees correctly
 
 
-#### notes:  
+#### Notes:  
 
 **AI use**: Co-pilot 14-15 Oct 2026
 - clarify type hints and csv loading
