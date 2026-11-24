@@ -4,10 +4,17 @@ This is a repository to store coursework created as part of the biological compu
 ## Author
 Aiyanuj Wongkomet (aiyanuj@gmail.com / ai.wongkomet23@imperial.ac.uk)
 
+## Running the codes
+The files can be run from the coursework root directory terminal using the commands in the code blocks
+
+
 
 ## Assignment 1
 
-### Code/**unixPrac1.txt** inspect and summarise FASTA genome sequences
+### **unixPrac1.txt** - inspect and summarise FASTA genome sequences
+```
+bash code/unixPrac1.txt 
+```
 - functions
 1. Count file lines
 2. Display sequence lines
@@ -16,35 +23,53 @@ Aiyanuj Wongkomet (aiyanuj@gmail.com / ai.wongkomet23@imperial.ac.uk)
 5. Calculate AT/GC ratio
 - input: data/fasta407228326.fasta data/fasta/407228412.fasta data/fasta/e_coli.fasta
 - output: terminal lines
-- from project root directory terminal, run: bash code/unixPrac1.txt 
 - changes after feedback: remove the use of intermediate fasta file for counting bases and count from the input file directly, untrack the intermediate file
 
-### Code/**tabtocsv.sh** change tab delimited file to comma delimited
+### **tabtocsv.sh** - change tab delimited file to comma delimited
+```
+bash code/tabtocsv.sh data/tab-example.tsv
+```
 - convert tsv to csv file, produce useful errors for missing, unreadable, or invalid input, or when output is saved unsuccessfully
 - input: data/tab-example.tsv
 - output: results/tab-example.tsv.csv
-- from project root directory terminal, run: bash code/tabtocsv.sh data/tab-example.tsv
-- changes after feedback: add error messages for when input is not exactly one or output is not in the results directory, correct the results directory path, use printf instead of echo
+- changes after feedback: add error messages for when input is not exactly one or output is not in the results directory, correct the results directory path, use printf instead of echo, run the code with different cases of invalid input in the terminal to check the errors are working
 
-### Code/**csvtospace.sh** change comma delimited file to space delimited
+### **csvtospace.sh** - change comma delimited file to space delimited
+```
+bash code/csvtospace.sh data/temperatures/1800.csv
+bash code/csvtospace.sh data/temperatures/1801.csv
+bash code/csvtospace.sh data/temperatures/1802.csv
+bash code/csvtospace.sh data/temperatures/1803.csv
+```
 - convert csv to space delimited txt file, produce useful errors for missing, unreadable, or invalid input, or when output is saved unsuccessfully
-- input: data/temperatures/1800.csv 
-- output: results/1800.csv.txt
-- from project root directory terminal, run: bash code/csvtospace.sh data/temperatures/1800.csv
-- (can replace 1800.csv with 1801.csv, 1802.csv, 1803.csv)
-- changes after feedback: add error messages for when input is not exactly one or output is not in the results directory, correct the results directory path
+- input: data/temperatures/1800.csv data/temperatures/1801.csv data/temperatures/1802.csv data/temperatures/1803.csv 
+- output: results/1800.csv.txt results/1801.csv.txt results/1802.csv.txt results/1803.csv.txt
+- changes after feedback: add error messages for when input is not exactly one or output is not in the results directory, correct the results directory path, run the code with different cases of invalid input in the terminal to check the errors are working
 
 
 
 ## Assignment 2
 
-### Code: **clean_silwood_trees.py** validate and clean the tree survey file
+### **clean_silwood_trees.py** - validate and clean the tree survey file
+```
+python3 code/clean_silwood_trees.py
+```
+- the codes clean the tree survey data, accept valid entries, reject entries with missing or invalid values, compile the accepted and rejected records, and produce a summary of oak trees count by species
+- metadata (contains the intruction for cleaning and rejection): data/silwood_trees_metadata.md
+- input: data/silwood_trees_raw.csv
+- output: 
+  1. results/silwood_trees_clean.csv (accepted records)
+  2. results/silwood_tree_issues.csv (rejected records and reasons)
+  3. results/oak_species_counts.csv (oak count summary)
+- testing:
+```
+python3 code/test_silwood_trees.py
+```
 
-### Pseudocode:
+#### pseudocode and function explanations:
 
-**INPUT**: data/silwood_trees_raw.csv
-
-**validate_records** # clean record or return rejection reason
+1. **validate_records**   
+for each record, run through each column, clean entry, return rejection reason in `errors` if the entry is missing/invalid/duplicate (using canonical rejection reasons from the metadata), otherwise add the entry to `cleaned`, if there is one or more errors then `cleaned` is converted to 'None'
 
     cleaned: 
     errors: 
@@ -52,11 +77,11 @@ Aiyanuj Wongkomet (aiyanuj@gmail.com / ai.wongkomet23@imperial.ac.uk)
     record_id:
             remove surrounding whitespace
             if record_id == ""
-                reject `missing record_id`
+                reject 'missing record_id'
             else if record_id != "ST" and exactly three digits
-                reject `invalid record_id`
+                reject 'invalid record_id'
             else if record_id in accepted_id
-                reject `duplicate record_id`
+                reject 'duplicate record_id'
             else
                 append accepted_id
                 append cleaned
@@ -64,45 +89,45 @@ Aiyanuj Wongkomet (aiyanuj@gmail.com / ai.wongkomet23@imperial.ac.uk)
     location:
             remove surrounding whitespace
             if location == ""
-                reject `missing location`
+                reject 'missing location'
             else if location != == Valid_locations, ignoring letter case
-                `invalid location`
+                'invalid location'
             else
                 append cleaned
-    Valid_genus = [ `Quercus`, `Acer`, `Betula`, `Fagus`, `Fraxinus` ]
+    Valid_genus = [ "Quercus", "Acer", "Betula", "Fagus", "Fraxinus" ]
     genus:
             remove surrounding whitespace
             if genus == ""
-                reject `missing genus`
+                reject 'missing genus'
             else if genus != == Valid_genus, ignoring letter case
-                reject `invalid genus`
+                reject 'invalid genus'
             else
                 append cleaned
-    Valid_species = [`robur`, `petraea`, `pseudoplatanus`, `pendula`, `sylvatica`, `excelsior`]
+    Valid_species = ["robur", "petraea", "pseudoplatanus", "pendula", "sylvatica", "excelsior"]
     species: 
             remove surrounding whitespace
             if species == ""
-                reject `missing species`
+                reject 'missing species'
             else if species != == Valid_species, ignoring letter case
-                reject `invalid species`
+                reject 'invalid species'
             else
                 append cleaned
     Valid_taxonpairs = []
     if genus and species valid:
         if (cleaned[genus], cleaned[species]) not in Valid_taxonpairs:
-            reject `invalid genus/species combination`
+            reject 'invalid genus/species combination'
     distance_m:
             if distance_m == ""
-                reject `missing distance_m
+                reject 'missing distance_m'
             else if distance_m <0 or >100
-                reject `distance_m out of range`
+                reject 'distance_m out of range'
             else 
                 append cleaned
     angle_degrees
             if angle_degrees == ""
-                reject `missing angle_degrees`
+                reject 'missing angle_degrees'
             else if angle_degrees <0 or >90
-                reject `angle_degrees out of range`
+                reject 'angle_degrees out of range'
             else
                 append cleaned
 
@@ -112,7 +137,8 @@ Aiyanuj Wongkomet (aiyanuj@gmail.com / ai.wongkomet23@imperial.ac.uk)
     return cleaned, errors
 
 
-**process_records** # sort records into accepted rows and issue reports
+2. **process_records**  
+sort accepted and rejected records into two lists, append records in `cleaned` to `accepted`, and append `errors` to `issues` 
 
     accepted = []
     issues = []
@@ -128,7 +154,8 @@ Aiyanuj Wongkomet (aiyanuj@gmail.com / ai.wongkomet23@imperial.ac.uk)
     return accepted, issues
 
 
-**summarise_oaks** # count accepted oak records by species
+3. **summarise_oaks**   
+count the number of oaks in the accepted records by species
 
     robur_count = 0
     petraea_count = 0
@@ -143,22 +170,9 @@ Aiyanuj Wongkomet (aiyanuj@gmail.com / ai.wongkomet23@imperial.ac.uk)
     return oak_counts
 
 
-**OUTPUT**:
-- results/silwood_trees_clean.csv -> accepted records
-- results/silwood_tree_issues.csv ->  rejected rows and their reasons
-- results/oak_species_counts.csv -> oak summary
+#### testing:
 
-
-
-### Running and testing:
-
-
-**code run testing in ipython3**: 
-run clean_silwood_trees.py
-run test_silwood_trees.py
-
-
-**checkpoint prints**:
+**checkpoint print tests**:
 
     records = load_records()
 
@@ -181,67 +195,24 @@ run test_silwood_trees.py
     print(oak_counts)
 
 
-**test importing modules**:
+**importing modules test**:
 
 from clean_silwood_trees import load_records, validate_records, process_records
     -> does not run 
 
 
-**assertion testing**:
+**assertion tests**:
 
-row_valid = {
-        "record_id": "ST012",
-        "location": "Manor House",
-        "genus": "Fraxinus",
-        "species": "excelsior",
-        "distance_m": "13.6",
-        "angle_degrees": "37",
-    }
-
-row_boundary = {
-        "record_id": "ST012 ",
-        "location": "manor house ",
-        "genus": "fraxinus",
-        "species": " excelSIOR ",
-        "distance_m": "99",
-        "angle_degrees": "80.7",
-    }
-
-row_invalid = {
-        "record_id": "ST09",
-        "location": "Silwood botto ",
-        "genus": "Fraxinus",
-        "species": "sylvatica",
-        "distance_m": "",
-        "angle_degrees": "37",
-    }
+```
+python3 code/test_silwood_trees.py
+```
+assert tests on each function by creating example cases of valid, invalid and boundary records
+- check if validate_records() correctly cleans and recognises the validity of each case
+- check if process_records() sorts accepted and rejected records accordingly
+- check if summarise_oaks() counts the number of oak trees correctly
 
 
-def test_valid_records(row):
-    cleaned, errors = validate_records(row, 2, set())
-
-    print("cleaned: ", cleaned)
-    print("Errors: ", errors)
-    
-    assert cleaned is not None
-    assert errors == []
-
-test_valid_records(row_valid)
-test_valid_records(row_boundary)
-
-
-
-def test_invalid_records(row):
-    cleaned, errors = validate_records(row, 2, set())
-
-    print("cleaned: ", cleaned)
-    print("Errors: ", errors)
-    
-    assert cleaned is None
-
-test_invalid_records(row_invalid)
-
-
+#### notes:  
 
 **AI use**: Co-pilot 14-15 Oct 2026
 - clarify type hints and csv loading
@@ -253,13 +224,17 @@ test_invalid_records(row_invalid)
 - how to include source_row in the process_records iterations and exclude header row
 - how is row.get("record_id", "") differ from row["record_id"]
 
+**changes after feedback**
+- move test_silwood_trees.py from `sandbox/` to `code/` directory
+- add assertion tests for process_records() and summarise_oaks() in test_silwood_trees.py
+- add and clarify explanations for each function in README
 
 
 
 ## Assignment 3
 
 
-### code/TreeHeight.R
+### **TreeHeight.R**
 
 usage: calculate tree heights with distance from tree and angle, save the results in a csv file
 
@@ -282,7 +257,7 @@ checking calculation: TreeHeightCalculation(8,45) --> 8
 
 
 
-### code/get_TreeHeight.R
+### **get_TreeHeight.R**
 
 usage: from any input data set, calculate tree heights with distance from tree and angle, save the results in a csv file
 
@@ -294,7 +269,7 @@ output: results/<input_basename>_treeheights.csv
 
 
 
-### code/pound_hill_analysis.R
+### **pound_hill_analysis.R**
 
 usage: from the pound hill data, find the species richness in each quadrat, calculate the mean richness in each plot, create a figure to compare mean richness across the three cultivation treatments
 
