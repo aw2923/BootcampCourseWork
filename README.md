@@ -70,9 +70,9 @@ python3 code/test_silwood_trees.py
 
 1. **validate_records**   
 for each record, run through each column, clean entry, return rejection reason in `errors` if the entry is missing/invalid/duplicate (using canonical rejection reasons from the metadata), otherwise add the entry to `cleaned`, if there is one or more errors then `cleaned` is converted to 'None'
-
-    cleaned:  
-    errors:  
+```
+    cleaned:
+    errors:
 
     record_id:  
             remove surrounding whitespace  
@@ -135,11 +135,11 @@ for each record, run through each column, clean entry, return rejection reason i
         cleaned = None  
 
     return cleaned, errors  
-
+```
 
 2. **process_records**  
 sort accepted and rejected records into two lists, append records in `cleaned` to `accepted`, and append `errors` to `issues`  
-
+```
     accepted = []  
     issues = []  
 
@@ -152,11 +152,11 @@ sort accepted and rejected records into two lists, append records in `cleaned` t
             issues.append = errors  
 
     return accepted, issues  
-
+```
 
 3. **summarise_oaks**   
 count the number of oaks in the accepted records by species  
-
+```
     robur_count = 0  
     petraea_count = 0  
 
@@ -168,12 +168,12 @@ count the number of oaks in the accepted records by species
 
     oak_counts = ({'species':'robur', 'count': robur_count }, {'species':'petraea', 'count': petraea_count })  
     return oak_counts  
-
+```
 
 #### Testing:
 
 **checkpoint print tests**:  
-
+```
     records = load_records()  
 
     print("Loaded Silwood trees data:")  
@@ -193,13 +193,12 @@ count the number of oaks in the accepted records by species
     oak_counts = summarise_oaks(clean_records)  
 
     print(oak_counts)  
-
+```
 
 **importing modules test**:  
-
+```
 from clean_silwood_trees import load_records, validate_records, process_records  
-    -> does not run 
-
+```
 
 **assertion tests**:
 
