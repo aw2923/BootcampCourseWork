@@ -233,7 +233,9 @@ def main() -> None:
         oak_counts,
     )
 
-    print("Done!")
+    print("Accepted records saved to:", RESULTS_DIR / "silwood_trees_clean.csv")
+    print("Rejected records saved to:", RESULTS_DIR / "silwood_tree_issues.csv")
+    print("Oak counts saved to:", RESULTS_DIR / "oak_species_counts.csv")
 
 
 if __name__ == "__main__":
