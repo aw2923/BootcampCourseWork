@@ -66,7 +66,7 @@ python3 code/clean_silwood_trees.py
 python3 code/test_silwood_trees.py
 ```
 
-#### Pseudocode and function explanations:
+#### Function explanations and pseudocodes:
 
 1. **validate_records**   
 for each record, run through each column, clean entry, return rejection reason in `errors` if the entry is missing/invalid/duplicate (using canonical rejection reasons from the metadata), otherwise add the entry to `cleaned`, if there is one or more errors then `cleaned` is converted to 'None'
@@ -225,7 +225,8 @@ assert tests on each function by creating example cases of valid, invalid and bo
 
 **changes after feedback**
 - move test_silwood_trees.py from `sandbox/` to `code/` directory
-- add assertion tests for process_records() and summarise_oaks() in test_silwood_trees.py
+- add assertion tests with for process_records() and summarise_oaks() in test_silwood_trees.py
+- add another invalid example case for testing in test_silwood_trees.py
 - add and clarify explanations for each function in README
 
 
@@ -234,53 +235,66 @@ assert tests on each function by creating example cases of valid, invalid and bo
 
 
 ### **TreeHeight.R**
-
-usage: calculate tree heights with distance from tree and angle, save the results in a csv file
-
-input: data/trees.csv
-
-running from terminal at project root: Rscript code/TreeHeight.R
-
-output: results/TreeHts.csv
-
-
-function:
-
-TreeHeightCalculation <- function(Distance.m, Angle.degrees) {
-    height_m <- Distance.m * tan(Angle.degrees * pi /180)
+```
+Rscript code/TreeHeight.R
+```
+- the code uses a function to calculate tree heights using angle and distance from the trees
+- checks for invalid or out of range angles and distance, and checks if the function produces the correct height calculation
+- input: data/trees.csv
+- output: results/TreeHts.csv
+- function:
+```
+TreeHeight <- function(Angle.degrees, Distance.m) {
+    radians <- Angle.degrees * pi / 180
+    height_m <- Distance.m * tan(radians)
     return(height_m)
 }
-height_m <- TreeHeightCalculation(treedata$Distance.m, treedata$Angle.degrees)
-
-checking calculation: TreeHeightCalculation(8,45) --> 8
-
+```
+- changes after feedback:
+  - align the function name, changing from `TreeHeightCalculation` to `TreeHeight`
+  - make the degree to radian conversion an explicit step in the function
+  - add a test to ensure the function is making the calculation correctly, raise an error if not
+  - streamline the code by appending the function output directly to the data frame
 
 
 ### **get_TreeHeight.R**
+```
+Rscript code/get_TreeHeight.R <input.csv>
+```
+- from a general data set input by user, the code calculates tree heights using angle and distance from the trees
+- checks for invalid input (input not exactly 1, does not exist, or contain invalid headers), then checks for invalid or out of range angles and distance
+- input: csv file input by user which must contain the following headers: "Species", "Distance.m", "Angle.degrees"
+- output: results/<input_basename>_treeheights.csv
+- changes after feedback:
+  - change the function name to `TreeHeight` to align with TreeHeight.R
+  - print out the output path containing the exact basename from the input
 
-usage: from any input data set, calculate tree heights with distance from tree and angle, save the results in a csv file
 
-input: csv file input by user (must be exactly 1 existing csv file with the correct headers ("Species", "Distance.m", "Angle.degrees"))
-
-running from terminal at project root: Rscript code/get_TreeHeight.R <input.csv>
-
-output: results/<input_basename>_treeheights.csv
-
+### **run_get_TreeHeight.sh**
+```
+bash code/run_get_TreeHeight.sh
+```
+- the code runs get_TreeHeight.R with data/trees.csv as input, and stops if the command fails
+- output: results/trees_treeheights.csv
+- this file was created following the formative feedback
 
 
 ### **pound_hill_analysis.R**
+```
+Rscript code/pound_hill_analysis.R
+```
+- from the pound hill data, the code compiles the species richness in each quadrat, calculates the mean richness in each plot, then creates a table summarising mean richness by plot and a figure comparing mean richness across the three cultivation treatments
+- input: data/pound_hill_data.csv
+- metadata: data/pound_hill_meta_data.csv
+- output: 
+  1. table = results/pound_hill_plot_richness.csv
+  2. figure = results/pound_hill_plot_richness.pdf
+- changes after feedback:
+  - create results/ directory if it does not exist, so the code can run independently
+  - adjust R packages calling
 
-usage: from the pound hill data, find the species richness in each quadrat, calculate the mean richness in each plot, create a figure to compare mean richness across the three cultivation treatments
 
-input: data/pound_hill_data.csv
 
-metadata: data/pound_hill_meta_data.csv
-
-running from terminal at project root: Rscript code/pound_hill_analysis.R
-
-output: 
-table = results/pound_hill_plot_richness.csv
-figure = results/pound_hill_plot_richness.pdf
 
 
 
