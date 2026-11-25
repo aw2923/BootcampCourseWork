@@ -1,15 +1,19 @@
 
-# Scientific question: How does mean plant species richness per quadrat vary among the March, May and October cultivation treatments?
+# Author : Aiyanuj <aw2923@ic.ac.uk>
+# Script: pound_hill_analysis.R
+# Desc: Analyse the pound hill data to investigate plant species richness across treatments
+
+# Scientific question:
+# How does mean plant species richness per quadrat vary among the March, May and October cultivation treatments?
 
 
 
 # Import data and metadata
 
 MyData <- as.matrix(read.csv("data/pound_hill_data.csv", header = FALSE))
-
 MyMetaData <- read.csv("data/pound_hill_meta_data.csv", header = TRUE, sep = ";")
 
-MyData[MyData == ""] <- 0 # according to the metadata, blanks in species count are observed absence and should be converted to 0
+MyData[MyData == ""] <- 0 #according to the metadata, blanks in species count are observed absence and should be converted to 0
 
 
 
@@ -20,8 +24,8 @@ TempData <- as.data.frame(MyData[-1, ], stringsAsFactors = FALSE)
 colnames(TempData) <- MyData[1, ]
 rownames(TempData) <- NULL
 
-library(reshape2)
-require(tidyverse)
+require(reshape2)
+require(dplyr)
 
 MyWrangledData <- melt(
   TempData,
@@ -38,7 +42,7 @@ MyWrangledData[, "Count"] <- as.integer(MyWrangledData[, "Count"])
 
 
 
-# check validity of count values
+# Check validity of count values
 
 for (i in MyWrangledData$Count) {
     if (is.numeric(i) == FALSE) {
@@ -53,10 +57,7 @@ for (i in MyWrangledData$Count) {
 }
 
 
-
 # Determine number of distinct species, quadrats and plots
-
-library(dplyr)
 
 print("Number of distinct species: ")
 n_distinct(MyWrangledData$Species)
@@ -91,14 +92,16 @@ PlotSummary <- QuadratTable %>%
         .groups = "keep"
     )
 
+dir.create("results", showWarnings = FALSE)
+
 write.csv(PlotSummary, "results/pound_hill_plot_richness.csv", row.names = FALSE)
-print("Saved plot-level mean richness to results/pound_hill_plot_richness.csv")
+print("Saved plot-level mean richness table to results/pound_hill_plot_richness.csv")
 
 
 
 # Create a figure comparing plot-level mean richness among the three cultivation treatments
 
-library(ggplot2)
+require(ggplot2)
 
 pdf("results/pound_hill_plot_richness.pdf",
 4, 7)
@@ -117,9 +120,10 @@ print("Saved a figure comparing plot-level mean richness among cultivation treat
 
 # Interpret the results
 
-# The May treatment has the highest richness. 
+# The May treatment has the highest richness.
 # There is some variation in the plots within treatments. Notably, plot 6 has higher richness than other plots in the October treatment.
-# The figure alone does not show that cultivation timing caused the differences. We need to perform statistical tests, examine the significance levels, look at the experimental design and relevant literature, for instance.
+# The figure alone does not show that cultivation timing caused the differences. Correlation does not confirm causation.
+# We need to perform statistical tests, examine the significance levels, look at the experimental design, relevant literature, and potential biological mechanisms, for instance.
 
 
 
