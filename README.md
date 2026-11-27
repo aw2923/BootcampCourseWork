@@ -21,7 +21,7 @@ bash code/unixPrac1.txt
 3. Count sequence length
 4. Count a literal motif (ATGC)
 5. Calculate AT/GC ratio
-- input: data/fasta407228326.fasta data/fasta/407228412.fasta data/fasta/e_coli.fasta
+- input: data/fasta/407228326.fasta data/fasta/407228412.fasta data/fasta/e_coli.fasta
 - output: terminal lines
 - changes after feedback: remove the use of intermediate fasta file for counting bases and count from the input file directly, untrack the intermediate file
 
@@ -112,7 +112,7 @@ for each record, run through each column, clean entry, return rejection reason i
                 reject 'invalid species'  
             else  
                 append cleaned  
-    Valid_taxonpairs = []  
+    Valid_taxonpairs = [ `Quercus` | `robur`, `Quercus` | `petraea`, `Acer` | `pseudoplatanus`, `Betula` | `pendula`, `Fagus` | `sylvatica`, `Fraxinus` | `excelsior` ]  
     if genus and species valid:  
         if (cleaned[genus], cleaned[species]) not in Valid_taxonpairs:  
             reject 'invalid genus/species combination'  
@@ -519,7 +519,7 @@ Rscript code/data_wrang_tidy.R
 - input: data/pound_hill_data.csv
 - metadata: data/pound_hill_meta_data.csv
 - output: results/pound_hill_long_tidy.csv
-- solved errors in formatting by consulting github co-pilot chat
+- solved errors in formatting by consulting Github Copilot chat
 
 ### observations_practice.R
 ```
@@ -531,10 +531,10 @@ Rscript code/observations_practice.R
 - input: 
   - data/bootcamp_observations.csv
   - data/bootcamp_observations_boundary.csv
-  - data/bootcamp_observations_invalid.csv"
+  - data/bootcamp_observations_invalid.csv
 - output: 
   - results/observations_summary.png
-- AI use: github co-pilot chat in VScode
+- AI use: Github Copilot chat in VS Code
   - checking invalid cases
   - catching the invalid input error
   - producing the figure
