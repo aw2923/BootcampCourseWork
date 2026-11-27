@@ -296,5 +296,245 @@ Rscript code/pound_hill_analysis.R
 
 
 
+## In class practice scripts
 
 
+### Shell scripting practice
+
+#### boilerplate.sh
+```
+bash code/boilerplate.sh
+```
+- simple boilerplate example with shebang, prints "This is a shell script!" and exits 0 
+
+#### variables.sh
+```
+bash code/variables.sh
+bash code/variables.sh 1 "two words"
+```
+- takes 2 arguments, then requires 1 string and 2 integers input from user, prints the string and the sum of the two integers 
+
+#### MyExampleScript.sh
+```
+bash code/MyExampleScript.sh
+```
+- stores the user's login name in a variable and prints it 
+
+#### CheckLabel.sh
+```
+bash code/CheckLabel.sh oak
+bash code/CheckLabel.sh pine
+```
+- accepts only 'oak' or 'pine' as user input, gives non-zero exit status if no input or any other input is given 
+
+#### CountLines.sh
+```
+bash code/CountLines.sh $1
+```
+- counts the number of lines in $1 input by user 
+
+#### ConcatenateTwoFiles.sh
+```
+bash code/ConcatenateTwoFiles.sh $1 $2 $3
+```
+- merge the content of $1 and $2 into $3 
+
+#### tiff2_png.sh
+```
+project_root=$PWD
+script_path=$project_root/code/tiff2_png.sh
+cd "<insert image directory>"
+bash "$script_path"
+cd "$project_root"
+```
+- converts TIFF to PNG
+- has to be used on the directory containing the image file 
+
+
+### Python practice
+
+#### loops.py
+```
+python3 code/loops.py
+```
+- examples of for and while loops
+
+#### cfexercises1.py
+```
+python3 code/cfexercises1.py
+```
+- examples of function, containing conditionals and loops
+- the function foo_5 has been adjusted to work when x is 0
+- uses main guard to run the example tests only when the script is directly executed, not when imported 
+
+#### cfexercises2.py
+```
+python3 code/cfexercises2.py
+```
+- more examples of function, containing conditionals and loops 
+
+#### MyExampleScript.py
+```
+python3 code/MyExampleScript.py
+```
+- example for saving and running python code 
+
+#### boilerplate.py
+```
+python3 code/boilerplate.py
+```
+- boilerplate, prints 'This is a boilerplate' 
+
+#### using_name.py
+```
+python3 code/using_name.py
+```
+- example of __name__ == "__main__" 
+
+#### control_flow.py
+```
+python3 code/control_flow.py
+```
+- example of a program with control flow, contains functions and example uses
+- the examples are under main and run only when the script is directly executed, not when imported 
+```
+python3 -m doctest -v code/control_flow.py
+```
+- run doctest for unit testing, to ensure the code is working as intended
+
+#### test_control_flow.py
+```
+python3 code/test_control_flow.py
+```
+- imports functions from control_flow.py
+- performs assertion tests on the functions, raise an error in case of failure
+
+#### sysargv.py
+```
+python3 code/sysargv.py
+python3 code/sysargv.py oak 12
+```
+- displays supplied command line arguments
+
+#### require_one_argument.py
+```
+python3 code/require_one_argument.py
+python3 code/require_one_argument.py oak
+```
+- requires one supplied argument, otherwise prints instruction and produces a non-zero exit
+
+#### debugme.py
+- example of a bugged function, debugging process
+- this file should be run within ipython3
+
+#### observations_practice.py
+```
+python3 code/observations_practice.py
+```
+- separates known and missing counts, raise error when count is invalid
+- summarises and returns total of known and missing counts for a site
+- input: data/bootcamp_observations.csv
+- output: terminal lines
+
+#### test_observations_practice.py
+```
+python3 code/test_observations_practice.py
+```
+- testing for observations_practice.py
+- assertion tests for `parse_count` and `summarise_site` functions
+- tests errors with boundary and invalid data
+
+
+### R practice
+
+#### basic_io.R
+```
+Rscript code/basic_io.R
+```
+- example of importing input and saving output in R
+- input: data/trees.csv
+- output: results/MyData.csv
+
+### control_flow.R
+```
+Rscript code/control_flow.R
+```
+- example of if conditionals, for loops and while loops
+
+### break.R
+```
+Rscript code/break.R
+```
+- uses `break` to break out of a loop
+- stops running once i == 10
+
+### next.R
+```
+Rscript code/next.R
+```
+- uses `next` to skip to the next iteration of a loop
+- skips when i is even, prints only odd numbers
+
+### boilerplate.R
+```
+Rscript code/boilerplate.R
+```
+- boilerplate R
+- a function prints the types of 2 arguments and returns them
+
+### r_conditionals.R
+```
+Rscript code/r_conditionals.R
+```
+- examples of functions and conditional statements in R
+
+### browse.R
+```
+source("code/browse.R")
+```
+- example for debugging
+- this file should be run within R console using source() to enter the browser mode
+
+### try.R
+```
+source("code/try.R")
+```
+- example of using try() to catch errors in R
+- this file should be run within R console using source()
+
+### data_wrang.R
+```
+Rscript code/data_wrang.R
+```
+- example of data wrangling, converting data from wide to long form
+- input: data/pound_hill_data.csv
+- metadata: data/pound_hill_meta_data.csv
+- output: results/pound_hill_long.csv
+
+### data_wrang_tidy.R
+```
+Rscript code/data_wrang_tidy.R
+```
+- data wrangling similar to data_wrang.R but using dplyr and tidyr to pivot
+- input: data/pound_hill_data.csv
+- metadata: data/pound_hill_meta_data.csv
+- output: results/pound_hill_long_tidy.csv
+- solved errors in formatting by consulting github co-pilot chat
+
+### observations_practice.R
+```
+Rscript code/observations_practice.R
+```
+- reads observations data and summarises total known and missing counts
+- function `read_observations(path)` checks the exact columns, rejects empty site/date values and invalid counts, and converts valid counts to integers
+- function `summarise_observations(data)` removes exact duplicates and returns per-site known totals and missing counts, using NA when all counts are missing
+- input: 
+  - data/bootcamp_observations.csv
+  - data/bootcamp_observations_boundary.csv
+  - data/bootcamp_observations_invalid.csv"
+- output: 
+  - results/observations_summary.png
+- AI use: github co-pilot chat in VScode
+  - checking invalid cases
+  - catching the invalid input error
+  - producing the figure
