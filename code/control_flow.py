@@ -11,9 +11,20 @@ __author__ = 'Aiyanuj (aiyanuj@gmail.com)'
 __version__ = '0.0.1'
 
 import sys
+import doctest
 
 def even_or_odd(x=0): # if not specified, x should take value 0.
-    """Find whether a number x is even or odd."""
+    """Return a description of whether integer x is even or odd.
+
+    >>> even_or_odd(10)
+    '10 is Even!'
+    >>> even_or_odd(5)
+    '5 is Odd!'
+    >>> even_or_odd(-2)
+    '-2 is Even!'
+    """
+    if not isinstance(x, int):
+        raise TypeError("x must be an integer")
     if x % 2 == 0: #The conditional if
         return f"{x} is Even!"
     return f"{x} is Odd!"
@@ -50,6 +61,15 @@ def find_all_primes(x=22):
             allprimes.append(i)
     print(f"There are {len(allprimes)} primes between 2 and {x}")
     return allprimes
+
+def count_above(heights_cm, threshold_cm):
+    """Return the number of heights strictly above a threshold."""
+    count = 0
+    for height_cm in heights_cm:
+        if height_cm > threshold_cm:
+            count += 1
+    return count
+
       
 def main(argv):
     print(even_or_odd(22))
