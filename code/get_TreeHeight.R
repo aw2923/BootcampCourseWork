@@ -1,7 +1,7 @@
 
 # Author: Aiyanuj Wongkomet <aw2923@ic.ac.uk>
 # Script: get_TreeHeight.R
-# For ageneralised csv input, calculate tree heights using angle degrees and distance from trees, save output to csv file
+# For a generalised csv input, calculate tree heights using angle degrees and distance from trees, save output to csv file
 
 
 # Accept input csv from user
@@ -51,7 +51,6 @@ for (i in treedata$Angle.degrees) {
         stop("Angle ", i, " is out of range")
     }
 }
-
 
 print("Inspect Input:")
 str(treedata)
