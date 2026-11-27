@@ -455,54 +455,54 @@ Rscript code/basic_io.R
 - input: data/trees.csv
 - output: results/MyData.csv
 
-### control_flow.R
+#### control_flow.R
 ```
 Rscript code/control_flow.R
 ```
 - example of if conditionals, for loops and while loops
 
-### break.R
+#### break.R
 ```
 Rscript code/break.R
 ```
 - uses `break` to break out of a loop
 - stops running once i == 10
 
-### next.R
+#### next.R
 ```
 Rscript code/next.R
 ```
 - uses `next` to skip to the next iteration of a loop
 - skips when i is even, prints only odd numbers
 
-### boilerplate.R
+#### boilerplate.R
 ```
 Rscript code/boilerplate.R
 ```
 - boilerplate R
 - a function prints the types of 2 arguments and returns them
 
-### r_conditionals.R
+#### r_conditionals.R
 ```
 Rscript code/r_conditionals.R
 ```
 - examples of functions and conditional statements in R
 
-### browse.R
+#### browse.R
 ```
 source("code/browse.R")
 ```
 - example for debugging
 - this file should be run within R console using source() to enter the browser mode
 
-### try.R
+#### try.R
 ```
 source("code/try.R")
 ```
 - example of using try() to catch errors in R
 - this file should be run within R console using source()
 
-### data_wrang.R
+#### data_wrang.R
 ```
 Rscript code/data_wrang.R
 ```
@@ -511,7 +511,7 @@ Rscript code/data_wrang.R
 - metadata: data/pound_hill_meta_data.csv
 - output: results/pound_hill_long.csv
 
-### data_wrang_tidy.R
+#### data_wrang_tidy.R
 ```
 Rscript code/data_wrang_tidy.R
 ```
@@ -521,7 +521,7 @@ Rscript code/data_wrang_tidy.R
 - output: results/pound_hill_long_tidy.csv
 - solved errors in formatting by consulting Github Copilot chat
 
-### observations_practice.R
+#### observations_practice.R
 ```
 Rscript code/observations_practice.R
 ```
